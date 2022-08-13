@@ -23,7 +23,7 @@ void Pendulum(const state_type& x, state_type& dxdt){
 void euler_step_forward(void (*Diff_Equation)(const state_type& x, state_type& dxdt), state_type& x, const double dt){
     state_type dxdt;    //temporary variable for storing dx/dt
     Diff_Equation(x, dxdt); //calculate dxdt from the differential equation
-    for (size_t i = 0; i < dim; i++) {
+    for (size_t i = 0; i < dimension; i++) {
         x[i] = x[i] + dxdt[i] * dt; //Euler forward difference formula
     }
 }
