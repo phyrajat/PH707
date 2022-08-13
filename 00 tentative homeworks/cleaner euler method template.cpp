@@ -4,12 +4,12 @@
 #include <vector>
 #include <map>
 
-//constant expressions appearing in the problem
+//Constant expressions appearing in the problem
 constexpr size_t dim = 2;   //dimension of the reduced 1st-order problem
 constexpr double PI = 3.14159265359;    //value of PI
 constexpr double rollnum = 0.226121014;  //my roll number
 
-//definition of data types in the problem
+//Definition of data types in the problem
 typedef std::array<double, dim> state_type;  //data type definition for dependant variables - array of x_0, x_1, ... x_n
 typedef std::map<double, state_type> solution;   //data type definition for storing the list of calculated values, map of time -> state
 
@@ -31,23 +31,23 @@ void euler_step_forward(void (*Diff_Equation)(const state_type& x, state_type& d
 int main(){
     solution x_t;   //variable to store the calculations
 
-    size_t STEPS = 1000;  //Number of steps
-    double t_0 = 0.0;   //t_0
-    double t_1 = 1.0;   //t_1
+    size_t STEPS = 100;  //number of steps
+    double t_0 = 0.0;   //initial time
+    double t_1 = 1.0;   //final time
     double dt = (t_1 - t_0) / (STEPS - 1); //step size
     state_type x = {0, rollnum};   //initial values for dependant variables
 
-    //step through the domain of the problem and store the solutions
-    x_t[t_0] = x;
+    //Step through the domain of the problem and store the solutions
+    x_t[t_0] = x;   //store initial values
     for (size_t i = 0; i < STEPS; i++) {
-        euler_step_forward(Pendulum, x, dt);
-        x_t[t_0 + i * dt] = x;
+        euler_step_forward(Pendulum, x, dt);    //step forward
+        x_t[t_0 + i * dt] = x;  //store the calculation
     }
 
     std::ofstream outfile;  //file handle to save the results in a file
     outfile.open("data for plotting.txt", std::ios::out | std::ios::trunc );
     for (auto const& temp : x_t){
-        outfile << temp.first << "\t" << temp.second[0] << std::endl;
+        outfile << temp.first << "\t" << temp.second[0] << temp.second[1] << std::endl;
     }
     outfile.close();
 }
