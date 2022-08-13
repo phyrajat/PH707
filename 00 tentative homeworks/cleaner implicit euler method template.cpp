@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 
+//constant expressions appearing in the problem
 constexpr size_t dim = 2;   //dimension of the reduced 1st-order problem
 
 typedef std::array<double, dim> state_type;  //data type definition for dependant variables - array of x_0, x_1, ... x_n
