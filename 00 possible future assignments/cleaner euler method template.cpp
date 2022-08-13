@@ -5,12 +5,12 @@
 #include <map>
 
 //Constant expressions appearing in the problem
-constexpr size_t dim = 2;   //dimension of the reduced 1st-order problem
+constexpr size_t dimension = 2;   //dimension of the reduced 1st-order problem
 constexpr double PI = 3.14159265359;    //value of PI
 constexpr double rollnum = 0.226121014;  //my roll number
 
 //Definition of data types in the problem
-typedef std::array<double, dim> state_type;  //data type definition for dependant variables - array of x_0, x_1, ... x_n
+typedef std::array<double, dimension> state_type;  //data type definition for dependant variables - array of x_0, x_1, ... x_n
 typedef std::map<double, state_type> solution;   //data type definition for storing the list of calculated values ((hash)map of time -> state)
 
 //This is the differential Equation, reduced to first-order
