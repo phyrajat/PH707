@@ -11,7 +11,7 @@ constexpr double rollnum = 0.226121014;  //my roll number
 
 //Definition of data types in the problem
 typedef std::array<double, dim> state_type;  //data type definition for dependant variables - array of x_0, x_1, ... x_n
-typedef std::map<double, state_type> solution;   //data type definition for storing the list of calculated values, map of time -> state
+typedef std::map<double, state_type> solution;   //data type definition for storing the list of calculated values (map of time -> state)
 
 //This is the differential Equation, reduced to first-order
 void Pendulum(const state_type& x, state_type& dxdt){
@@ -31,11 +31,11 @@ void euler_step_forward(void (*Diff_Equation)(const state_type& x, state_type& d
 int main(){
     solution x_t;   //variable to store the calculations
 
-    size_t STEPS = 100;  //number of steps
+    size_t STEPS = 1000;  //number of steps
     double t_0 = 0.0;   //initial time
     double t_1 = 1.0;   //final time
     double dt = (t_1 - t_0) / (STEPS - 1); //step size
-    state_type x = {0, rollnum};   //initial values for dependant variables
+    state_type x = {0.0, rollnum};   //initial values for dependant variables
 
     //Step through the domain of the problem and store the solutions
     x_t[t_0] = x;   //store initial values
@@ -47,7 +47,7 @@ int main(){
     std::ofstream outfile;  //file handle to save the results in a file
     outfile.open("data for plotting.txt", std::ios::out | std::ios::trunc );
     for (auto const& temp : x_t){
-        outfile << temp.first << "\t" << temp.second[0] << temp.second[1] << std::endl;
+        outfile << temp.first << "\t" << temp.second[0] << "\t" << temp.second[1] << std::endl;
     }
     outfile.close();
 }
