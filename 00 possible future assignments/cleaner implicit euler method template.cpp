@@ -3,6 +3,7 @@
 #include <array>
 #include <vector>
 #include <map>
+#include "Eigen/Core"
 
 //Constant expressions appearing in the problem
 constexpr size_t dimension = 2;   //dimension of the reduced 1st-order problem
