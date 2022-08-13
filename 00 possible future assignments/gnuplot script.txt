@@ -9,6 +9,6 @@ set xtics nomirror
 
 set terminal pdf font "Times New Roman-Bold"
 
-set output 'physical pendulum.pdf'
+set output 'physical pendulum plot.pdf'
 
 plot 'data for plotting.txt' using 1:2 title "solution x graph", 'data for plotting.txt' using 1:3 title "solution dx/dt graph"

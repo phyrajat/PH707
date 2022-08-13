@@ -33,7 +33,7 @@ int main(){
     double t_0 = 0.0;   //initial time
     double t_1 = 1.0;   //final time
     double dt = (t_1 - t_0) / (STEPS - 1); //step size
-    state_type x = {0.0, rollnum};   //initial values for dependant variables
+    state_type x = {1.001 * PI, 0.0};   //initial values for dependant variables
 
     //Step through the domain of the problem and store the solutions
     x_t[t_0] = x;   //store initial values
