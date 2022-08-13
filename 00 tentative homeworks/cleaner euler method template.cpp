@@ -15,9 +15,9 @@ void Pendulum(const state_type& x, state_type& dxdt){
 }
 
 //The stepper function, calculates x_{n+1} given the differential equation, x_{n} and step size
-void euler_step(void (*System)(const state_type& x, state_type& dxdt), state_type& x, const double dt){
+void euler_step(void (*Diff_Equation)(const state_type& x, state_type& dxdt), state_type& x, const double dt){
     state_type dxdt;    //
-    System(x, dxdt);
+    Diff_Equation(x, dxdt);
     for (size_t i = 0; i < dim; i++) {
         x[i] = x[i] + dxdt[i] * dt;
     }
