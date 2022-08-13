@@ -11,7 +11,7 @@ constexpr double rollnum = 0.226121014;  //my roll number
 
 //Definition of data types in the problem
 typedef std::array<double, dim> state_type;  //data type definition for dependant variables - array of x_0, x_1, ... x_n
-typedef std::map<double, state_type> solution;   //data type definition for storing the list of calculated values (map of time -> state)
+typedef std::map<double, state_type> solution;   //data type definition for storing the list of calculated values ((hash)map of time -> state)
 
 //This is the differential Equation, reduced to first-order
 void Pendulum(const state_type& x, state_type& dxdt){
@@ -19,18 +19,11 @@ void Pendulum(const state_type& x, state_type& dxdt){
     dxdt[1] = -4.0 * PI * PI * sin(x[0]);
 }
 
-//This is the root-finder for implicit Euler solver
-void Newton_Rhapson(){
-
-}
-
-//The stepper function, calculates x_{n+1} given the differential equation, x_{n} and step size
+//The stepper function for implicit Euler, find x_{n+1} using Newton's root-finding algorithm given the differential equation, x_{n} and step size
 void euler_step_implicit(void (*Diff_Equation)(const state_type& x, state_type& dxdt), state_type& x, const double dt){
-    state_type dxdt;    //temporary variable for storing dx/dt
-    Diff_Equation(x, dxdt); //calculate dxdt from the differential equation
-    for (size_t i = 0; i < dim; i++) {
-        x[i] = x[i] + dxdt[i] * dt; //Euler forward difference formula
-    }
+    /*
+    *   To be implemented
+    */
 }
 
 int main(){

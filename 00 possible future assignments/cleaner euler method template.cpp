@@ -11,7 +11,7 @@ constexpr double rollnum = 0.226121014;  //my roll number
 
 //Definition of data types in the problem
 typedef std::array<double, dim> state_type;  //data type definition for dependant variables - array of x_0, x_1, ... x_n
-typedef std::map<double, state_type> solution;   //data type definition for storing the list of calculated values (map of time -> state)
+typedef std::map<double, state_type> solution;   //data type definition for storing the list of calculated values ((hash)map of time -> state)
 
 //This is the differential Equation, reduced to first-order
 void Pendulum(const state_type& x, state_type& dxdt){
