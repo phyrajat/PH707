@@ -8,6 +8,7 @@
 constexpr size_t dimension = 2;   //dimension of the reduced 1st-order problem
 constexpr double PI = 3.14159265359;    //value of PI
 constexpr double rollnum = 0.226121014;  //my roll number
+constexpr size_t numiters = 10;  //number of newton iterations in each step
 
 //Definition of data types in the problem
 typedef Eigen::Matrix<double, dimension, 1> state_type;  //data type definition for dependant variables - coloumn matrix of x_0, x_1, ... x_n
@@ -20,10 +21,9 @@ void Pendulum(const state_type& x, state_type& dxdt){
     dxdt[1] = -4.0 * PI * PI * sin(x[0]);
 }
 
-//This is the Jacobean for the Multidimensional Newton
+//This is the Jacobean for the Multidimensional Newton iteration
 void PendulumJacobian(const state_type& x, matrix& Jx, const double& dt){
-    Jx << -1.0/dt, 1.0,
-        -4.0 * PI * PI * cos(x[0]), -1.0/dt;
+    Jx << -1.0 / dt, 1.0, -4.0 * PI * PI * cos(x[0]), -1.0 / dt;
 }
 
 //The stepper function, iteratively solves the implicit equation for x_{n+1} given the differential equation, Jacobean, x_{n} and step size
@@ -33,7 +33,7 @@ void implicit_Euler_step(void (*Diff_Equation)(const state_type& x, state_type& 
     Diff_Equation(x, dxdt); //calculate the derivative according to the differential equations
     x_n = x_n + dt * dxdt;   //initial guess for Newton's method according to forward euler
     matrix Jx;  //variable for storing the Jacobean
-    for (size_t i = 0; i < 10; i++) {
+    for (size_t i = 0; i < numiters; i++) {
         Diff_Equation(x_n, dxdt);   //calculate the derivative at x_n
         Jacobian(x_n, Jx, dt);  //calculate the Jacobean at x_n
         x_n = x_n - Jx.inverse() * (dxdt - (x_n - x) / dt); //Newton iterations
