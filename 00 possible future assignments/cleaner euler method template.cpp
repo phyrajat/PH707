@@ -45,7 +45,7 @@ int main(){
     }
 
     std::ofstream outfile;  //file handle to save the results in a file
-    outfile.open("data for plotting.txt", std::ios::out | std::ios::trunc );
+    outfile.open("forward.txt", std::ios::out | std::ios::trunc );
     for (auto const& temp : x_t){
         outfile << temp.first << "\t" << temp.second[0] << "\t" << temp.second[1] << std::endl;
     }
