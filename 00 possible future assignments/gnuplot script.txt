@@ -2,8 +2,6 @@ set xlabel 'Time'
 set ylabel 'Angle'
 set autoscale
 set style data lines
-#set xrange [0:10]
-#set yrange [0:600]
 set ytics nomirror
 set xtics nomirror
 
