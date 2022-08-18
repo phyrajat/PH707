@@ -1,0 +1,12 @@
+f(x,y) = 0.5*y*y + cos(x)
+
+set view map
+unset key
+unset surface
+set contour
+
+set xrange [0: 4 * pi]
+
+set isosamples 100
+set cntrparam levels discrete 1.00005, 3, 27/2
+splot f(x,y) with lines
