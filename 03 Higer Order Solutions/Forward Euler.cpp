@@ -27,7 +27,7 @@ void Pendulum(const state_type& x, state_type& dxdt, state_type& d2xdt2, state_t
 
     //Fourth derivatives
     d4xdt4[0] = d3xdt3[1];
-    d4xdt4[1] = cos(x[0]) * x[1] * x[1] * x[1] - 2.0 * sin(x[0]) * sin(x[0]) * x[1] + cos(x[0]) * x[1];
+    d4xdt4[1] = cos(x[0]) * x[1] * x[1] * x[1] - 2.0 * sin(x[0]) * sin(x[0]) * x[1] + cos(2.0 * x[0]) * x[1];
 }
 
 //The stepper function, calculates x_{n+1} given the differential equation, x_{n} and step size
