@@ -1,0 +1,13 @@
+set xlabel 'Angle'
+set ylabel 'Angular Velocity'
+set autoscale
+#set xrange [0: 4*pi]
+set style data lines
+set ytics nomirror
+set xtics nomirror
+
+set terminal pdf font "Times New Roman-Bold"
+
+set output 'phase space medium v.pdf'
+
+plot '2.0.txt' using 2:3 title "v = 2.0"
