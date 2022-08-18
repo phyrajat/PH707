@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <array>
-#include <vector>
 #include <map>
 
 //Constant expressions appearing in the problem
