@@ -15,6 +15,7 @@ typedef std::map<double, state_type> solution;  //data type definition for stori
 
 //Class template for the Runge Kutta solver using Butcher tableau
 template <class State_Type, size_t order> class explicit_rk {
+    //data type definnitions for storing the Butcher tableau
     typedef std::array<double, order> butcher_coefficients;
     typedef std::array<std::array<double, order>, order> butcher_matrix;
 private:
@@ -34,21 +35,27 @@ public:
 
     }
 
-    //The stepper function, calculates x_{n+1} given the butcher tableau, differential equation, x_{n}, t and step size
+    //The stepper function, calculates x_{n+1} given the differential equation, x_{n}, t and step size
     void do_step(void (*Diff_Equation)(const State_Type& x, const double& t, State_Type& dxdt), State_Type& x, const double& t, const double& dt){
-        State_Type result = x;
+        State_Type result = x;  //temporary variable for storing the result
+
+        //loops for evaluating k1, k2 ... k_n
         for (size_t i = 0; i < order; i++) {
-            State_Type sum{}, dxdt;
+            State_Type sum{}, dxdt; //temporary variables for k's and the derivatives
             for (size_t j = 0; j < i; j++) {
-                sum = sum + dt * a[i][j] * k[j];
+                sum = sum + dt * a[i][j] * k[j];    //compute a_{ij} * k_j
             }
-            sum = x + sum;
-            Diff_Equation(sum, t + c[i] * dt, dxdt);
-            k[i] = dxdt;
+            sum = x + sum;  //compute x_{n} + a_{ij} * k_j
+            Diff_Equation(sum, t + c[i] * dt, dxdt);    //evaluate dx/dt at (x_{n} + a_{ij} * k_j, t_{n} + c_{i} * dt) according to Runge Kutta
+            k[i] = dxdt;    //store the dx/dt as k_i
         }
+
+        //loop for calculating x_{n+1} using the k's
         for (size_t i = 0; i < order; i++) {
             result = result + dt * b[i] * k[i];
         }
+
+        //return the result
         x = result;
     }
 };
