@@ -12,19 +12,40 @@ constexpr double rollnum = 0.226121014;  //my roll number
 typedef std::array<double, dimension> state_type;  //data type definition for dependant variables - array of x_0, x_1, ... x_n
 typedef std::map<double, state_type> solution;   //data type definition for storing the list of calculated values ((hash)map of time -> state)
 
+//Overload the + operator to be able to add vectors
+state_type operator + (state_type const &x, state_type const &y) {
+    state_type z;
+    for (size_t i = 0; i < dimension; i++) {
+        z[i] = x[i] + y[i];
+    }
+    return z;
+}
+
+//Overload the * operator to be able to multiply numbers and vectors
+state_type operator * (double const &a, state_type const &x) {
+    state_type z;
+    for (size_t i = 0; i < dimension; i++) {
+        z[i] = a * x[i];
+    }
+    return z;
+}
+
 //This is the differential Equation, reduced to first-order
-void Pendulum(const state_type& x, state_type& dxdt){
+void Pendulum(const state_type& x, const double& t, state_type& dxdt){
     dxdt[0] = x[1];
     dxdt[1] = -4.0 * PI * PI * sin(x[0]);
 }
 
-//The stepper function, calculates x_{n+1} given the differential equation, x_{n} and step size
-void euler_step_forward(void (*Diff_Equation)(const state_type& x, state_type& dxdt), state_type& x, const double dt){
-    state_type dxdt;    //temporary variable for storing dx/dt
-    Diff_Equation(x, dxdt); //calculate dxdt from the differential equation
-    for (size_t i = 0; i < dimension; i++) {
-        x[i] = x[i] + dxdt[i] * dt; //Euler forward difference formula
-    }
+//The stepper function, iteratively calculates x_{n+1} given the differential equation, x_{n} and step size
+void rk4_step(void (*Diff_Equation)(const state_type& x, const double& t, state_type& dxdt), state_type& x, const double& t, const double& dt){
+    state_type k1, k2, k3, k4;
+
+    Diff_Equation(x, t, k1);
+    Diff_Equation(x + (dt / 2.0) * k1, t + dt / 2.0, k2);
+    Diff_Equation(x + (dt / 2.0) * k2, t + dt / 2.0, k3);
+    Diff_Equation(x + dt * k3, t + dt, k4);
+
+    x = x + (dt / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4);
 }
 
 int main(){
@@ -39,12 +60,12 @@ int main(){
     //Step through the domain of the problem and store the solutions
     x_t[t_0] = x;   //store initial values
     for (size_t i = 0; i < STEPS; i++) {
-        euler_step_forward(Pendulum, x, dt);    //step forward
+        rk4_step(Pendulum, x, NULL, dt);    //step forward
         x_t[t_0 + i * dt] = x;  //store the calculation
     }
 
     std::ofstream outfile;  //file handle to save the results in a file
-    outfile.open("forward.txt", std::ios::out | std::ios::trunc );
+    outfile.open("rk4.txt", std::ios::out | std::ios::trunc );
     for (auto const& temp : x_t){
         outfile << temp.first << "\t" << temp.second[0] << "\t" << temp.second[1] << std::endl;
     }
