@@ -2,7 +2,6 @@
 #include <fstream>
 #include <cmath>
 #include <array>
-#include <vector>
 #include <map>
 
 //Constant expressions appearing in the problem
