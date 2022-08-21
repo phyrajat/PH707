@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cmath>
 #include <map>
 #include "Eigen/Core"   //Very popular modern C++ library for linear algebra, used here for matrix multiplication and inversion
 #include "Eigen/Dense"
