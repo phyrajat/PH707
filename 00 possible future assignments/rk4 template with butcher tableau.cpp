@@ -39,7 +39,7 @@ public:
     void do_step(void (*Diff_Equation)(const State_Type& x, const double& t, State_Type& dxdt), State_Type& x, const double& t, const double& dt){
         State_Type result = x;
         for (size_t i = 0; i < order; i++) {
-            State_Type sum, dxdt;
+            State_Type sum{}, dxdt;
             for (size_t j = 0; j < i; j++) {
                 sum = sum + dt * a[i][j] * k[j];
             }
@@ -79,7 +79,13 @@ void Pendulum(const state_type& x, const double& t, state_type& dxdt){
 }
 
 int main(){
-    explicit_rk <state_type, 4> rk4_stepper({0,0,0,0,.5,0,0,0,0,.5,0,0,0,0,1,0}, {1.0/6.0 , 1.0/3.0 , 1.0/3.0 , 1.0/6.0}, { 0.0 , 0.5 , 0.5 , 1.0});    //Using the class template, creates a class object for the Runge Kutta solver with a given butcher tableau
+    //Using the class template, creates a class object for the Runge Kutta solver with a given butcher tableau
+    explicit_rk <state_type, 4> rk4_stepper({0,0,0,0,
+                                            .5,0,0,0,
+                                            0,.5,0,0,
+                                            0,0,1,0},
+                                            {1.0/6.0 , 1.0/3.0 , 1.0/3.0 , 1.0/6.0}, 
+                                            { 0.0 , 0.5 , 0.5 , 1.0});
 
     solution x_t;   //variable to store the calculations
 
@@ -97,7 +103,7 @@ int main(){
     }
 
     std::ofstream outfile;  //file handle to save the results in a file
-    outfile.open("rk4.txt", std::ios::out | std::ios::trunc );
+    outfile.open("tableau.txt", std::ios::out | std::ios::trunc );
     for (auto const& temp : x_t){
         outfile << temp.first << "\t" << temp.second[0] << "\t" << temp.second[1] << std::endl;
     }

@@ -9,4 +9,4 @@ set terminal pdf font "Times New Roman-Bold"
 
 set output 'physical pendulum plot.pdf'
 
-plot 'forward.txt' using 1:2 title "forward Euler", 'rk4.txt' using 1:2 title "rk4"
+plot 'tableau.txt' using 1:2 title "general rk4", 'rk4.txt' using 1:2 title "rk4"
