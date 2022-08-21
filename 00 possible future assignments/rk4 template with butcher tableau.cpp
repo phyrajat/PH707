@@ -27,7 +27,7 @@ private:
 public:
     //Constructor
     explicit_rk(butcher_matrix A, std::array<double, order> B, std::array<double, order> C) : a(A), b(B), c(C) {
-
+        k = {};    //zero-initialize k
     }
 
     //Destructor
@@ -52,7 +52,7 @@ public:
         }
         x = result;
     }
-}; 
+};
 
 //Overload the + operator to be able to add two vectors
 state_type operator + (state_type const &x, state_type const &y) {
@@ -80,12 +80,12 @@ void Pendulum(const state_type& x, const double& t, state_type& dxdt){
 
 int main(){
     //Using the class template, creates a class object for the Runge Kutta solver with a given butcher tableau
-    explicit_rk <state_type, 4> rk4_stepper({0,0,0,0,
+    explicit_rk <state_type, 4> rk4_stepper({0,0,0,0,   //Butcher matrix
                                             .5,0,0,0,
                                             0,.5,0,0,
                                             0,0,1,0},
-                                            {1.0/6.0 , 1.0/3.0 , 1.0/3.0 , 1.0/6.0}, 
-                                            { 0.0 , 0.5 , 0.5 , 1.0});
+                                            {1.0/6.0 , 1.0/3.0 , 1.0/3.0 , 1.0/6.0},    //Butcher b coefficiants
+                                            { 0.0 , 0.5 , 0.5 , 1.0});  //Butcher c coefficients
 
     solution x_t;   //variable to store the calculations
 
