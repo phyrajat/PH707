@@ -52,7 +52,7 @@ public:
 
         //loop for calculating x_{n+1} using the k's
         for (size_t i = 0; i < order; i++) {
-            result = result + dt * b[i] * k[i];
+            result = result + dt * b[i] * k[i]; //weighted average of k's with b's as weights
         }
 
         //return the result
