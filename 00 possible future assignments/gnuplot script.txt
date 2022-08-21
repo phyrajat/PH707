@@ -9,4 +9,4 @@ set terminal pdf font "Times New Roman-Bold"
 
 set output 'physical pendulum plot.pdf'
 
-plot 'forward.txt' using 1:2 title "forward Euler", 'implicit.txt' using 1:2 title "implicit Euler", 0.226121014 / (2 * pi) * sin(2 * pi * x) title "exact solution"
+plot 'forward.txt' using 1:2 title "forward Euler", 'rk4.txt' using 1:2 title "rk4"
