@@ -24,12 +24,12 @@ private:
     //temporary variables for intermediate steps
     std::array<State_Type, order> k;
 public:
-    //Constructor
+    //Constructor - just copy the Butcher tableau
     explicit_rk(butcher_matrix A, std::array<double, order> B, std::array<double, order> C) : a(A), b(B), c(C) {
         k = {};    //zero-initialize k
     }
 
-    //Destructor
+    //Destructor - nothong to do
     ~explicit_rk() {
 
     }
@@ -79,7 +79,7 @@ void Pendulum(const state_type& x, const double& t, state_type& dxdt){
 
 int main(){
     //Using the class template, creates a class object for the Runge Kutta solver with a given butcher tableau
-    explicit_rk <state_type, 4> rk4_stepper({0,0,0,0,   //Butcher matrix
+    explicit_rk <state_type, 4> rk4_stepper({0,0,0,0,   //Butcher a matrix
                                             .5,0,0,0,
                                             0,.5,0,0,
                                             0,0,1,0},
