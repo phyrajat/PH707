@@ -13,6 +13,24 @@ constexpr double rollnum = 0.226121014;  //my roll number
 typedef std::array<double, dimension> state_type;   //data type definition for dependant variables - array of x_0, x_1, ... x_n
 typedef std::map<double, state_type> solution;  //data type definition for storing the list of calculated values ((hash)map of time -> state)
 
+//Overload the + operator to be able to add two vectors
+state_type operator + (state_type const& x, state_type const& y) {
+	state_type z;
+	for (size_t i = 0; i < dimension; i++) {
+		z[i] = x[i] + y[i]; //add the individual components and store in z
+	}
+	return z;   //return the resulting vector z
+}
+
+//Overload the * operator to be able to multiply numbers and vectors
+state_type operator * (double const& a, state_type const& x) {
+	state_type z;
+	for (size_t i = 0; i < dimension; i++) {
+		z[i] = a * x[i];    //multiply the individual components and store in z
+	}
+	return z;   //return the resulting vector z
+}
+
 //Class template for the Runge Kutta solver using Butcher tableau
 template <class State_Type, size_t order> class explicit_rk {
 	//data type definnitions for storing the Butcher tableau
@@ -26,7 +44,7 @@ private:
 	std::array<State_Type, order> k;
 public:
 	//Constructor - just copy the Butcher tableau
-	explicit_rk(butcher_matrix A, std::array<double, order> B, std::array<double, order> C) : a(A), b(B), c(C) {
+	explicit_rk(butcher_matrix A, butcher_coefficients B, butcher_coefficients C) : a(A), b(B), c(C) {
 		k = {};    //zero-initialize k
 	}
 
@@ -59,24 +77,6 @@ public:
 		x = result;
 	}
 };
-
-//Overload the + operator to be able to add two vectors
-state_type operator + (state_type const& x, state_type const& y) {
-	state_type z;
-	for (size_t i = 0; i < dimension; i++) {
-		z[i] = x[i] + y[i]; //add the individual components and store in z
-	}
-	return z;   //return the resulting vector z
-}
-
-//Overload the * operator to be able to multiply numbers and vectors
-state_type operator * (double const& a, state_type const& x) {
-	state_type z;
-	for (size_t i = 0; i < dimension; i++) {
-		z[i] = a * x[i];    //multiply the individual components and store in z
-	}
-	return z;   //return the resulting vector z
-}
 
 //This is the differential Equation, reduced to first-order
 void Pendulum(const state_type& x, const double& t, state_type& dxdt) {
