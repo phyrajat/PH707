@@ -8,8 +8,8 @@
 constexpr size_t dimension = 2;   //dimension of the reduced 1st-order problem
 constexpr double PI = 3.14159265359;    //value of PI
 constexpr double rollnum = 0.226121014;  //my roll number
-constexpr double initial_stepsize = 0.1;  //initial step-size
-constexpr size_t max_iter = 2;	//maximum number of iterations in adapting stepsize
+constexpr double initial_stepsize = 0.01;  //initial step-size
+constexpr size_t max_iter = 10;	//maximum number of iterations in adapting stepsize
 
 //Definition of data types in the problem
 typedef std::array<double, dimension> state_type;   //data type definition for dependant variables - array of x_0, x_1, ... x_n
@@ -34,13 +34,12 @@ state_type operator * (double const& a, state_type const& x) {
 }
 
 //Overload the + operator to be able to add two vectors
-double sqrdiff (state_type const& x, state_type const& y) {
+double absdiff(state_type const& x) {
 	double result = 0;
-	state_type z = x + (-1.0) * y;
 	for (size_t i = 0; i < dimension; i++) {
-		result += z[i] + z[i]; //add the individual components and store in z
+		result += x[i] * x[i]; //add the individual components and store in z
 	}
-	return result;   //return the resulting vector z
+	return sqrt(result);   //return the resulting vector z
 }
 
 //Class template for the Runge Kutta solver using Butcher tableau
@@ -51,27 +50,17 @@ template <class State_Type, size_t order> class explicit_rk {
 private:
 	//information about the Butcher tableau
 	butcher_matrix a;
-	butcher_coefficients b, b1, c;
+	butcher_coefficients bh, bt, c;
 	//temporary variables for intermediate steps
 	std::array<State_Type, order> k;
 	//Properties of the adaptive method
 	double tolerance;
 	size_t max_iters;
-public:
-	//Constructor - just copy the Butcher tableau
-	explicit_rk(butcher_matrix A, butcher_coefficients B, butcher_coefficients B1, butcher_coefficients C, double Tolerance, size_t Max_iters) : a(A), b(B), b1(B1), c(C), tolerance(Tolerance), max_iters(Max_iters) {
-		k = {};    //zero-initialize k
-	}
-
-	//Destructor - nothong to do
-	~explicit_rk() {
-
-	}
 
 	//The stepper function, calculates x_{n+1} given the differential equation, x_{n}, t and step size
-	void do_step(void (*Diff_Equation)(const State_Type& x, const double& t, State_Type& dxdt), State_Type& x, double& t, double& dt) {
-		State_Type rklow = x;  //temporary variable for storing the result
-		State_Type rkhigh = x;  //temporary variable for storing the result
+	void stepper(void (*Diff_Equation)(const State_Type& x, const double& t, State_Type& dxdt), const State_Type& x, const double& t, const double& dt, State_Type& result, double& error) {
+		State_Type res = x;  //temporary variable for storing the result
+		State_Type err = {};  //temporary variable for storing the result
 
 		//loops for evaluating k1, k2 ... k_n
 		for (size_t i = 0; i < order; i++) {
@@ -86,16 +75,46 @@ public:
 
 		//loop for calculating x_{n+1} using the k's
 		for (size_t i = 0; i < order; i++) {
-			rkhigh = rkhigh + dt * b[i] * k[i]; //weighted average of k's with b's as weights
+			res = res + dt * bh[i] * k[i]; //weighted average of k's with b's as weights
 		}
 
 		//loop for calculating x_{n+1} using the k's
 		for (size_t i = 0; i < order; i++) {
-			rklow = rklow + dt * b1[i] * k[i]; //weighted average of k's with b1's as weights
+			err = err + dt * bt[i] * k[i]; //weighted average of k's with b's as weights
 		}
 
 		//return the result
-		double error = sqrdiff(rkhigh, rklow);
+		result = res;
+		error = absdiff(err);
+	}
+public:
+	//Constructor - just copy the Butcher tableau
+	explicit_rk(butcher_matrix A, butcher_coefficients BH, butcher_coefficients BT, butcher_coefficients C, double Tolerance, size_t Max_iters) : a(A), bh(BH), bt(BT), c(C), tolerance(Tolerance), max_iters(Max_iters) {
+		k = {};    //zero-initialize k
+	}
+
+	//Destructor - nothong to do
+	~explicit_rk() {
+
+	}
+
+	//The stepper function, calculates x_{n+1} given the differential equation, x_{n}, t and step size
+	void do_step(void (*Diff_Equation)(const State_Type& x, const double& t, State_Type& dxdt), State_Type& x, double& t, double& dt) {
+		State_Type result = {};  //temporary variable for storing the result
+		double error = 1.0e6;
+		size_t numiter = 0;
+		double h = dt;
+
+		while (error > tolerance && numiter < max_iters) {
+			dt = h;
+			stepper(Diff_Equation, x, t, dt, result, error);
+			h = dt * pow(tolerance / error, 1.0 / 5);
+			numiter++;
+		}
+
+		t = t + dt;
+		dt = h;
+		x = result;
 	}
 };
 
@@ -107,18 +126,22 @@ void Pendulum(const state_type& x, const double& t, state_type& dxdt) {
 
 int main() {
 	//Using the class template, creates a class object for the Runge Kutta solver with the butcher tableau of Runge Kutta Fehlberg 4(5)
-	explicit_rk <state_type, 5> rkf45_stepper(
-		{ 0,0,0,0,   //Butcher a matrix
-		.5,0,0,0,
-		0,.5,0,0,
-		0,0,1,0 },
-		{ 1.0 / 6.0 , 1.0 / 3.0 , 1.0 / 3.0 , 1.0 / 6.0 },    //Butcher b coefficiants
-		{ 1.0 / 6.0 , 1.0 / 3.0 , 1.0 / 3.0 , 1.0 / 6.0 },    //Butcher b* coefficiants
-		{ 0.0 , 0.5 , 0.5 , 1.0 },	//Butcher c coefficients
-		0.01, max_iter );
+	explicit_rk <state_type, 2> rk12_stepper(
+		{
+			0.0,	0.0,
+			1.0,	0.0
+		},
+
+		{ 0.5, 0.5 },    //Butcher bh coefficiants
+
+		{0.5, -0.5 },    //Butcher bt coefficiants
+
+		{ 0.0, 1.0 },	//Butcher c coefficients
+
+		0.001, max_iter);
 
 	solution x_t;   //variable to store the calculations
-	
+
 	double t_0 = 0.0;   //initial time
 	double t_1 = 1.0;   //final time
 	double t = t_0;	//time variable
@@ -128,10 +151,10 @@ int main() {
 	//Step through the domain of the problem and store the solutions
 	x_t[t_0] = x;   //store initial values
 	while (t < t_1) {
-		rkf45_stepper.do_step(Pendulum, x, t, dt);
-		x_t[t] = x; 
+		rk12_stepper.do_step(Pendulum, x, t, dt);
+		x_t[t] = x;
 	}
-	
+
 
 	std::ofstream outfile;  //file handle to save the results in a file
 	outfile.open("tableau.txt", std::ios::out | std::ios::trunc);
