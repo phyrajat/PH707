@@ -1,0 +1,331 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+% Variables to change every new document
+\newcommand{\hmwkClass}{PH 707} % Course/class
+\newcommand{\hmwkNumber}{4} % Assignment number
+
+% Constants to set once
+\newcommand{\hmwkAuthorName}{Rajat Kumar Mandal} % Your name
+\newcommand{\hmwkUserID}{Roll No} % User ID
+\newcommand{\hmwkStudentNumber}{226121014} % Student number
+
+% Packages
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+
+% Margins
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+% General document properties
+\linespread{1.1} % Line spacing
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+% Required to not count titlepage in page numbering
+\addtocounter {page} {-1}
+
+% Make a simple command for use in document body
+\newcommand{\start}{
+\maketitle
+\thispagestyle{empty}
+\newpage
+}
+
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName} % Top left header
+\rhead{\hmwkClass:\ Assignment\ \#\hmwkNumber}
+\lfoot{\lastxmark} % Bottom left footer
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}} % Bottom right footer
+\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+% The following 2 commands setup the title page
+\title{
+\vspace{2in}
+\textmd{\textbf{\hmwkClass:\ Assignment\ \#\hmwkNumber}}\\
+\normalsize\vspace{0.1in}\small{ \today }\\
+\vspace{3in}
+}
+
+\author{
+  \textbf{\hmwkAuthorName} \\
+  \texttt{\hmwkUserID \hspace{0.1in}- \hmwkStudentNumber}
+}
+
+% Do not display standard date since we use a custom date
+\date{}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+start
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Fourth Order Runge Kutta Error Term.
+\end_layout
+
+\begin_layout Standard
+The Runge Kutta approximation for 
+\begin_inset Formula $\int_{t_{n}}^{t_{n+1}=t_{n}+h}\overrightarrow{f}\left(\overrightarrow{x}\left(t\right),t\right)dt$
+\end_inset
+
+ to solve the equation 
+\begin_inset Formula $\overrightarrow{x}\left(t\right)=\overrightarrow{f}\left(\overrightarrow{x}\left(t\right),t\right)$
+\end_inset
+
+ is,
+\begin_inset Formula 
+\[
+\overrightarrow{x}_{n+1}=\overrightarrow{x}_{n}+\frac{h}{6}\left(\overrightarrow{k}_{1}+2\overrightarrow{k}_{2}+2\overrightarrow{k}_{3}+\overrightarrow{k}_{4}\right)
+\]
+
+\end_inset
+
+where,
+\begin_inset Formula 
+\begin{align*}
+\overrightarrow{k}_{1} & =\overrightarrow{f}\left(\overrightarrow{x}_{n},t_{n}\right)\\
+\overrightarrow{k}_{2} & =\overrightarrow{f}\left(\overrightarrow{x}_{n}+\frac{h}{2}\overrightarrow{k}_{1},t_{n}+\frac{h}{2}\right)\\
+\overrightarrow{k}_{3} & =\overrightarrow{f}\left(\overrightarrow{x}_{n}+\frac{h}{2}\overrightarrow{k}_{2},t_{n}+\frac{h}{2}\right)\\
+\overrightarrow{k}_{4} & =\overrightarrow{f}\left(\overrightarrow{x}_{n}+\overrightarrow{k}_{3},t_{n}+h\right).
+\end{align*}
+
+\end_inset
+
+Putting these together,
+\begin_inset Formula 
+\begin{align*}
+\overrightarrow{x}_{n+1} & =\overrightarrow{x}_{n}+\frac{h}{6}\overrightarrow{f}\left(\overrightarrow{x}_{n},t_{n}\right)+\frac{h}{3}\overrightarrow{f}\left(\overrightarrow{x}_{n}+\frac{h}{2}\overrightarrow{f}\left(\overrightarrow{x}_{n},t_{n}\right),t_{n}+\frac{h}{2}\right)\\
+ & +\frac{h}{3}\overrightarrow{f}\left(\overrightarrow{x}_{n}+\frac{h}{2}\overrightarrow{f}\left(\overrightarrow{x}_{n}+\frac{h}{2}\overrightarrow{f}\left(\overrightarrow{x}_{n},t_{n}\right),t_{n}+\frac{h}{2}\right),t_{n}+\frac{h}{2}\right)\\
+ & +\frac{h}{6}\overrightarrow{f}\left(\overrightarrow{x}_{n}+\overrightarrow{f}\left(\overrightarrow{x}_{n}+\frac{h}{2}\overrightarrow{f}\left(\overrightarrow{x}_{n}+\frac{h}{2}\overrightarrow{f}\left(\overrightarrow{x}_{n},t_{n}\right),t_{n}+\frac{h}{2}\right),t_{n}+\frac{h}{2}\right),t_{n}+h\right).
+\end{align*}
+
+\end_inset
+
+Now we can expand 
+\begin_inset Formula $E\left(h\right)=\int_{t_{n}}^{t_{n}+h}\overrightarrow{f}\left(\overrightarrow{x}\left(t\right),t\right)dt-\overrightarrow{x}_{n+1}\left(h\right)$
+\end_inset
+
+ in a Taylor expansion of 
+\begin_inset Formula $h$
+\end_inset
+
+ up to 5th order in Mathematica.
+ 
+\series bold
+The code and the results are given in the next page
+\series default
+.
+ Note that the lowest order term is 
+\begin_inset Formula $o\left(h^{5}\right)$
+\end_inset
+
+ so that the locally it is correct upto 4th order.
+ Globally(in the whole problem range, not just in 
+\begin_inset Formula $\left(t_{n},t_{n+1}\right)$
+\end_inset
+
+), one upper bound of the error is 
+\begin_inset Formula $O\left(h^{4}\right)$
+\end_inset
+
+(in general difficult to prove for arbitrary differential equations and
+ arbitrary ranges).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here is a cleaner Mathematica code for the error term
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename rk4-error.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Physical Pendulum Using Runge Kutta 4th Order.
+\end_layout
+
+\begin_layout Standard
+In the following pages, the codes and the results are presented in the following
+ order:
+\end_layout
+
+\begin_layout Enumerate
+Physical pendulum solution for stepsize 
+\begin_inset Formula $\frac{2\pi-0}{1000}=0.00628319$
+\end_inset
+
+ in the range 
+\begin_inset Formula $\left(0,2\pi\right)$
+\end_inset
+
+ and comparison with Taylor approximation.
+\end_layout
+
+\begin_layout Enumerate
+The solution for various step-sizes and the optimal step size, by inspection.
+\end_layout
+
+\begin_layout Enumerate
+A better, easier, less computationally expensive and very well-known method
+ of controlling for the step-sizes in RK, the Adaptive Runge-Kutta method
+ applied to the physical pendulum.
+\end_layout
+
+\begin_layout Standard
+It helps to summarize the method using the Butcher tableaux as follows:
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename rk4 table.png
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename ark4 table.png
+	scale 70
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Butcher Tables for 4th order Runge Kutta and Adaptive Runge Kutta
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
