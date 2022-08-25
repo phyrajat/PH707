@@ -108,7 +108,7 @@ public:
 		while (error > tolerance && numiter < max_iters) {
 			dt = h;
 			stepper(Diff_Equation, x, t, dt, result, error);
-			h = dt * pow(tolerance / error, 1.0 / 5);
+			h = dt * pow(tolerance / error, 1.0 / 2.0);
 			numiter++;
 		}
 
@@ -125,7 +125,7 @@ void Pendulum(const state_type& x, const double& t, state_type& dxdt) {
 }
 
 int main() {
-	//Using the class template, creates a class object for the Runge Kutta solver with the butcher tableau of Runge Kutta Fehlberg 4(5)
+	//Using the class template, creates a class object for the Runge Kutta solver with the butcher tableau of Runge Kutta 1(2) also known as Euler-Heun
 	explicit_rk <state_type, 2> rk12_stepper(
 		{
 			0.0,	0.0,
@@ -138,7 +138,7 @@ int main() {
 
 		{ 0.0, 1.0 },	//Butcher c coefficients
 
-		0.001, max_iter);
+		0.001, max_iter);	//tolerance and maximum number of step recalculation at each step
 
 	solution x_t;   //variable to store the calculations
 
@@ -157,7 +157,7 @@ int main() {
 
 
 	std::ofstream outfile;  //file handle to save the results in a file
-	outfile.open("tableau.txt", std::ios::out | std::ios::trunc);
+	outfile.open("rk1(2) Euler-Heun.txt", std::ios::out | std::ios::trunc);
 	for (auto const& temp : x_t) {
 		outfile << temp.first << "\t" << temp.second[0] << "\t" << temp.second[1] << std::endl;
 	}

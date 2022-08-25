@@ -206,7 +206,7 @@ Now we can expand
 \begin_inset Formula $h$
 \end_inset
 
- up to 4th order in Mathematica.
+ up to 5th order in Mathematica.
  
 \series bold
 The code and the results are given in the next page
@@ -246,12 +246,33 @@ newpage
 \end_layout
 
 \begin_layout Standard
-Here is a cleaner Mathematica code for the error term
-\end_layout
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Graphics
 	filename rk4-error.pdf
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Cleaner Mathematica code for the lowest order error term in RK4 approximation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
 
 \end_inset
 
@@ -285,13 +306,14 @@ The solution for various step-sizes and the optimal step size, by inspection.
 
 \begin_layout Enumerate
 A better, easier, less computationally expensive and very well-known method
- of controlling for the step-sizes in RK, the Adaptive Runge-Kutta method
- applied to the physical pendulum.
+ of controlling for the step-sizes in RK, an Adaptive Runge-Kutta method
+ (Euler-Heun) applied to the physical pendulum.
 \end_layout
 
 \begin_layout Standard
 It helps to summarize the method using the Butcher tableaux as follows:
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status collapsed
@@ -304,7 +326,7 @@ status collapsed
 
 
 \begin_inset Graphics
-	filename ark4 table.png
+	filename rk1(2).png
 
 \end_inset
 
@@ -312,7 +334,230 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Butcher Tables for 4th order Runge Kutta and Adaptive Runge Kutta
+Butcher Tables for 4th order Runge Kutta and Adaptive Runge Kutta of order
+ 1(2) (Euler-Heun)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename rk4 1000.pdf
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+RK4 with 1000 steps for equation 
+\begin_inset Formula $x''\left(t\right)=-4\pi^{2}\sin{x\left(t\right)}$
+\end_inset
+
+, 
+\begin_inset Formula $x\left(0\right)=0$
+\end_inset
+
+, 
+\begin_inset Formula $x'\left(0\right)=0.226121014$
+\end_inset
+
+(my roll number)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename comparison rk4 taylor.pdf
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison with 4th order Taylor approximation with 1000 steps for equation
+ 
+\begin_inset Formula $x''\left(t\right)=-\sin{x\left(t\right)}$
+\end_inset
+
+, 
+\begin_inset Formula $x\left(0\right)=0$
+\end_inset
+
+, 
+\begin_inset Formula $x'\left(0\right)=0.01$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename C:/Users/rajat/Documents/IITG/Courses/PH707 Computational Physics/PH707/04 Runge Kutta/outputs/comparison.pdf
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison for different stepsizes for equation 
+\begin_inset Formula $x''\left(t\right)=-4\pi^{2}\sin{x\left(t\right)}$
+\end_inset
+
+, 
+\begin_inset Formula $x\left(0\right)=0$
+\end_inset
+
+, 
+\begin_inset Formula $x'\left(0\right)=0.226121014$
+\end_inset
+
+(my roll number), 256 steps (stepsize = 
+\begin_inset Formula $1/255$
+\end_inset
+
+) onwards we get almost no change.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename adaptive rk1(2) Euler-Heun.pdf
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison between RK4 with 1000 steps and adaptive Runge Kutta method of
+ order 1(2) (Euler-Heun) for equation 
+\begin_inset Formula $x''\left(t\right)=-4\pi^{2}\sin{x\left(t\right)}$
+\end_inset
+
+, 
+\begin_inset Formula $x\left(0\right)=0$
+\end_inset
+
+, 
+\begin_inset Formula $x'\left(0\right)=0.226121014$
+\end_inset
+
+(my roll number) 
 \end_layout
 
 \end_inset

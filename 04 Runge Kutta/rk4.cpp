@@ -1,4 +1,4 @@
-#include <iostream>
+#include <string>
 #include <fstream>
 #include <cmath>
 #include <array>
@@ -34,7 +34,7 @@ state_type operator * (double const &a, state_type const &x) {
 //This is the differential Equation, reduced to first-order
 void Pendulum(const state_type& x, const double& t, state_type& dxdt){
     dxdt[0] = x[1];
-    dxdt[1] = -4.0 * PI * PI * sin(x[0]);
+    dxdt[1] = - sin(x[0]);
 }
 
 //The stepper function, iteratively calculates x_{n+1} given the differential equation, x_{n} and step size
@@ -55,11 +55,11 @@ void rk4_step(void (*Diff_Equation)(const state_type& x, const double& t, state_
 int main(){
     solution x_t;   //variable to store the calculations
 
-    size_t STEPS = 1000;  //number of steps
+    size_t STEPS = 1024;  //number of steps
     double t_0 = 0.0;   //initial time
-    double t_1 = 1.0;   //final time
+    double t_1 = 4.0 * PI;   //final time
     double dt = (t_1 - t_0) / (STEPS - 1); //step size
-    state_type x = {0.0, rollnum};   //initial values for dependant variables
+    state_type x = {0.0, 0.01};   //initial values for dependant variables
 
     //Step through the domain of the problem and store the solutions
     x_t[t_0] = x;   //store initial values
@@ -69,7 +69,7 @@ int main(){
     }
 
     std::ofstream outfile;  //file handle to save the results in a file
-    outfile.open("rk4.txt", std::ios::out | std::ios::trunc );
+    outfile.open("comparison rk4.txt", std::ios::out | std::ios::trunc );
     for (auto const& temp : x_t){
         outfile << temp.first << "\t" << temp.second[0] << "\t" << temp.second[1] << std::endl;
     }

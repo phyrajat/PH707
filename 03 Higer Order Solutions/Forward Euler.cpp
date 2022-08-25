@@ -46,7 +46,7 @@ int main(){
     double t_0 = 0.0;   //initial time
     double t_1 = 4.0 * PI;   //final time
     double dt = (t_1 - t_0) / (STEPS - 1); //step size
-    state_type x = {0.0, 5.0};   //initial values for dependant variables
+    state_type x = {0.0, 0.01};   //initial values for dependant variables
 
     //Step through the domain of the problem and store the solutions
     x_t[t_0] = x;   //store initial values
@@ -56,7 +56,7 @@ int main(){
     }
 
     std::ofstream outfile;  //file handle to save the results in a file
-    outfile.open("5.0.txt", std::ios::out | std::ios::trunc );
+    outfile.open("comparison Taylor.txt", std::ios::out | std::ios::trunc );
     for (auto const& temp : x_t){
         outfile << temp.first << "\t" << temp.second[0] << "\t" << temp.second[1] << std::endl;
     }
