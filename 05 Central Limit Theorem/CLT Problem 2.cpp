@@ -8,7 +8,7 @@ constexpr std::array<double, 4> numvars = {5, 10, 100, 2000};
 
 int main()
 {
-    std::array<double, samplesize> x{};
+    std::array<double, samplesize> Z{};
 
     std::random_device dev; //Responsible for getting a random seed from OS
     std::mt19937_64 rng(dev());    //Mersenne Twister engine with the seed for generating pseudo-random numbers
@@ -20,12 +20,12 @@ int main()
     std::ofstream outfile;  //file handle to save the results in a file
     outfile.open("./output/problem2.txt", std::ios::out | std::ios::trunc);
 
-    for(auto& xi : x){
+    for(auto& Zi : Z){
         for (size_t i = 0; i < numvars[0]; i++) {
-            xi += sigmainverse * (dist(rng) - mean);
+            Zi += sigmainverse * (dist(rng) - mean);
         }
-        xi /= sqrt(numvars[0]);
-        outfile << xi << std::endl;
+        Zi /= sqrt(numvars[0]);
+        outfile << Zi << std::endl;
     }
     outfile.close();
 }
