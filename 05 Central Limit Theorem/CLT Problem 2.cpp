@@ -18,13 +18,13 @@ int main()
     double mean = 0.5;
 
     std::ofstream outfile;  //file handle to save the results in a file
-    outfile.open("./output/problem2.txt", std::ios::out | std::ios::trunc);
+    outfile.open("./output/problem2_2000.txt", std::ios::out | std::ios::trunc);
 
     for(auto& Zi : Z){
-        for (size_t i = 0; i < numvars[0]; i++) {
+        for (size_t i = 0; i < numvars[3]; i++) {
             Zi += sigmainverse * (dist(rng) - mean);
         }
-        Zi /= sqrt(numvars[0]);
+        Zi /= sqrt(numvars[3]);
         outfile << Zi << std::endl;
     }
     outfile.close();
