@@ -12,7 +12,10 @@ constexpr std::complex<double> i(0, 1);
 
 //This is the function to be taken DFT of
 std::complex<double> function(double t) {
-	return exp(2.0 * pi * i * t - t);
+	if(t <= 8)
+		return exp(2.0 * pi * i * t - t);
+	else
+		return (std::complex<double>) 0;
 }
 
 //Helper function to discretize the given function
@@ -58,7 +61,7 @@ Complexlist FFT(Complexlist P) {
 
 int main() {
 	//Discretize given function in 2048 steps
-	Complexlist coefficients = discretizer(function, 0, 8, 8192);
+	Complexlist coefficients = discretizer(function, 0, 10, 2048);
 
 	//Calculate the FFT
 	Complexlist values = FFT(coefficients);
