@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "00 Python Binding example",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "00 Python Binding matplotlib", "00 Python Binding matplotlib\00 Python Binding matplotlib.vcxproj", "{76F3C190-B0A2-4B77-AFF2-6FFC63604501}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Quizp1", "Quizp1\Quizp1.vcxproj", "{04FB05DE-E345-4EE4-8B2B-074B0D55B612}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{76F3C190-B0A2-4B77-AFF2-6FFC63604501}.Release|x64.Build.0 = Release|x64
 		{76F3C190-B0A2-4B77-AFF2-6FFC63604501}.Release|x86.ActiveCfg = Release|Win32
 		{76F3C190-B0A2-4B77-AFF2-6FFC63604501}.Release|x86.Build.0 = Release|Win32
+		{04FB05DE-E345-4EE4-8B2B-074B0D55B612}.Debug|x64.ActiveCfg = Debug|x64
+		{04FB05DE-E345-4EE4-8B2B-074B0D55B612}.Debug|x64.Build.0 = Debug|x64
+		{04FB05DE-E345-4EE4-8B2B-074B0D55B612}.Debug|x86.ActiveCfg = Debug|Win32
+		{04FB05DE-E345-4EE4-8B2B-074B0D55B612}.Debug|x86.Build.0 = Debug|Win32
+		{04FB05DE-E345-4EE4-8B2B-074B0D55B612}.Release|x64.ActiveCfg = Release|x64
+		{04FB05DE-E345-4EE4-8B2B-074B0D55B612}.Release|x64.Build.0 = Release|x64
+		{04FB05DE-E345-4EE4-8B2B-074B0D55B612}.Release|x86.ActiveCfg = Release|Win32
+		{04FB05DE-E345-4EE4-8B2B-074B0D55B612}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

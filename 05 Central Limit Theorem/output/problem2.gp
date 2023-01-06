@@ -1,6 +1,6 @@
 set xlabel 'Z'
 set ylabel '1/N dN/dZ'
-set xrange [-10:10]
+set xrange [0:1]
 
 set ytics nomirror
 set xtics nomirror

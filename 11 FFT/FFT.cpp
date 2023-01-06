@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <vector>
 #include <complex>
@@ -12,7 +11,7 @@ constexpr std::complex<double> i(0, 1);
 
 //This is the function to be taken DFT of
 std::complex<double> function(double t) {
-	if(t <= 8)
+	if (t <= 8)
 		return exp(2.0 * pi * i * t - t);
 	else
 		return (std::complex<double>) 0;

@@ -3,28 +3,27 @@
 #include <fstream>
 
 //The sample size for plotting final distribution - this many numbers will be drawn
-constexpr size_t samplesize = 500000;
+constexpr size_t samplesize = 1000000;
+constexpr double PI = 3.414;
 
 double f(double x){
-    if (x <= 0){
-        return 0;
+    if (x > 0 && x < 1){
+        return 2.0 + 2.0 * sin(4.0 * PI * x);
     }else{
-        return exp( - x );
+        return 0;
     }
 }
 
 int main() {
     std::random_device dev; //Responsible for getting a random seed from OS
-    std::mt19937_64 randomwalk(250);    //Mersenne Twister engine with the seed for generating pseudo-random numbers
-    std::mt19937_64 selector(350);    //Mersenne Twister engine with the seed for generating pseudo-random numbers
-    std::uniform_real_distribution<double> randomwalkdist(-1, 1); // distribution in range [-1, 1]
-    std::uniform_real_distribution<double> selectordist(0, 1); // distribution in range [0, 1]
+    std::mt19937_64 randomwalk(dev()), selector(dev());    //Mersenne Twister engine with the seed for generating pseudo-random numbers
+    std::uniform_real_distribution<double> randomwalkdist(-1, 1), selectordist(0, 1); // distribution in range [-1, 1]
 
     std::array<double, samplesize> positions = {};
-    double position = 0;
+    double position = 0.2;
 
     std::ofstream outfile;  //file handle to save the results in a file
-    outfile.open("./output/metropolis exp.txt", std::ios::out | std::ios::trunc);
+    outfile.open("./output/exam.txt", std::ios::out | std::ios::trunc);
 
     for (auto& x : positions) {   //loop over number of samples to be drawn
         double proposed_position = position + randomwalkdist(randomwalk);
